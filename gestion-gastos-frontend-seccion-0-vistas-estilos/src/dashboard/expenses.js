@@ -46,7 +46,7 @@ async function saveExpense() {
     );
     alert("Gasto guardado correctamente");
     form.reset();
-    //loadExpenses();
+    loadExpenses();
   } catch (error) {
     console.error(error);
     alert("No se pudo crear el gasto");
@@ -62,7 +62,7 @@ async function loadExpenses() {
     expenses.forEach((expense) => {
       const li = document.createElement("li");
       li.innerHTML = `
-        <span>${expense.title}</span>
+        <span>${expense.title}--->$${expense.amount}</span>
         <button class="edit">Editar</button>
       `;
       li.querySelector("button").addEventListener("click", () => {
@@ -87,8 +87,17 @@ function editExpense(expense) {
   btnCancel.style.display = "inline";
 }
 
+function cancelUpdate() {
+  inputId.value = "";
+  btnSave.style.display = "inline-block";
+  btnUpdate.style.display = "none";
+  btnCancel.style.display = "none";
+  form.reset();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadCategories();
   loadExpenses();
 });
 btnSave.addEventListener("click", saveExpense);
+btnCancel.addEventListener("click", cancelUpdate);
