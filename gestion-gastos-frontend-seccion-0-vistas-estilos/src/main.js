@@ -1,5 +1,5 @@
-import { getToken, clearToken } from "./src/utils/auth.js";
-import { apiFetch } from "./src/utils/api.js";
+import { getToken, clearToken } from "./utils/auth.js";
+import { apiFetch } from "./utils/api.js";
 
 //funcion cerrar session
 

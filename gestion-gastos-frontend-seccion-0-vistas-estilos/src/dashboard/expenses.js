@@ -27,7 +27,31 @@ async function loadCategories() {
     alert("No se pudieron cargar las categorias");
   }
 }
+//Crear un nuevo gasto
+async function saveExpense() {
+  const title = inputTitle.value.trim();
+  const amount = inputAmount.value.trim();
+  const category = selectCategory.value;
+  const date = inputDate.value;
+  try {
+    const token = getToken();
+    await apiFetch(
+      "/expenses/new",
+      "POST",
+      { title, amount, category, date },
+      token,
+    );
+    alert("Gasto guardado correctamente");
+    form.reset();
+    loadExpenses();
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo crear el gasto");
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadCategories();
-  //loadExpenses();
+  // loadExpenses();
 });
+btnSave.addEventListener("click", saveExpense);
