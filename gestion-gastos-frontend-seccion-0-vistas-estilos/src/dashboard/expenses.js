@@ -58,17 +58,17 @@ async function loadExpenses() {
   try {
     const token = getToken();
     const expenses = await apiFetch("/expenses/list", "GET", null, token);
-    list.innerHTML = "";
+    expenseList.innerHTML = "";
     expenses.forEach((expense) => {
       const li = document.createElement("li");
       li.innerHTML = `
-        <span>${expense.name}</span>
+        <span>${expense.title}</span>
         <button class="edit">Editar</button>
       `;
       li.querySelector("button").addEventListener("click", () => {
         editExpense(expense);
       });
-      list.appendChild(li);
+      expenseList.appendChild(li);
     });
   } catch (error) {
     console.error("Error al cargar el gasto:", error.message);
@@ -76,8 +76,19 @@ async function loadExpenses() {
   }
 }
 
+function editExpense(expense) {
+  inputId.value = expense._id;
+  inputTitle.value = expense.title;
+  inputAmount.value = expense.amount;
+  selectCategory.value = expense.category;
+  inputDate.value = expense.date ? expense.date.slice(0, 10) : "";
+  btnSave.style.display = "none";
+  btnUpdate.style.display = "inline";
+  btnCancel.style.display = "inline";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadCategories();
-  // loadExpenses();
+  loadExpenses();
 });
 btnSave.addEventListener("click", saveExpense);

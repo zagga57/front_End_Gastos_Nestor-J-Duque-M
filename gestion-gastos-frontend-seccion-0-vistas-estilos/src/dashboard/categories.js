@@ -10,7 +10,7 @@ const btnUpdate = document.getElementById("updateCategory");
 const btnCancel = document.getElementById("cancelUpdate");
 const list = document.getElementById("categoryList");
 
-//Guardar una categoria
+//Crear una categoria
 async function saveCategory() {
   const name = inputName.value.trim();
   if (!name) {
