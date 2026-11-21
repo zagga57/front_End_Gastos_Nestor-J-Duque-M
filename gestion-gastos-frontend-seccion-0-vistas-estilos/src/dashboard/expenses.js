@@ -11,6 +11,7 @@ const btnSave = document.getElementById("saveExpense");
 const btnUpdate = document.getElementById("updateExpense");
 const btnCancel = document.getElementById("cancelUpdate");
 const expenseList = document.getElementById("expenseList");
+
 //Funcion para cargar las categorias en el selector
 async function loadCategories() {
   try {
