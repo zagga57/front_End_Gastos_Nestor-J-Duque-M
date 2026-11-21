@@ -28,7 +28,9 @@ async function loadCategories() {
     alert("No se pudieron cargar las categorias");
   }
 }
+
 //Crear un nuevo gasto
+
 async function saveExpense() {
   const title = inputTitle.value.trim();
   const amount = inputAmount.value.trim();
@@ -44,10 +46,33 @@ async function saveExpense() {
     );
     alert("Gasto guardado correctamente");
     form.reset();
-    loadExpenses();
+    //loadExpenses();
   } catch (error) {
     console.error(error);
     alert("No se pudo crear el gasto");
+  }
+}
+//mostrar los gastos
+
+async function loadExpenses() {
+  try {
+    const token = getToken();
+    const expenses = await apiFetch("/expenses/list", "GET", null, token);
+    list.innerHTML = "";
+    expenses.forEach((expense) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span>${expense.name}</span>
+        <button class="edit">Editar</button>
+      `;
+      li.querySelector("button").addEventListener("click", () => {
+        editExpense(expense);
+      });
+      list.appendChild(li);
+    });
+  } catch (error) {
+    console.error("Error al cargar el gasto:", error.message);
+    alert("No pudimos cargar los gastos");
   }
 }
 
