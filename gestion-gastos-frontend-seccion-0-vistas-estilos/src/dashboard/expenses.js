@@ -95,9 +95,34 @@ function cancelUpdate() {
   form.reset();
 }
 
+//actualizar gastos
+
+async function updateExpense() {
+  const id = inputId.value;
+  const title = inputTitle.value.trim();
+  const amount = inputAmount.value.trim();
+  const category = selectCategory.value;
+  const date = inputDate.value;
+  try {
+    const token = getToken();
+    await apiFetch(
+      `/expenses/${id}`,
+      "PUT",
+      { title, amount, category, date },
+      token,
+    );
+    alert("Gasto actualizado correctamente");
+    cancelUpdate();
+    loadExpenses();
+  } catch (error) {
+    console.error("Error al actualizar el Gasto", error.message);
+    alert("No pudimos actualizar el Gasto");
+  }
+}
 document.addEventListener("DOMContentLoaded", () => {
   loadCategories();
   loadExpenses();
 });
 btnSave.addEventListener("click", saveExpense);
 btnCancel.addEventListener("click", cancelUpdate);
+btnUpdate.addEventListener("click", updateExpense);
