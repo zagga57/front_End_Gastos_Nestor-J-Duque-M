@@ -28,7 +28,7 @@ async function saveCategory() {
     alert(error.message);
   }
 }
-
+//cargar categorias
 async function loadCategories() {
   try {
     const token = getToken();
@@ -66,6 +66,8 @@ function cancelUpdate() {
   btnCancel.style.display = "none";
   form.reset();
 }
+
+///actualizar categorias
 
 async function updateCategory() {
   const id = inputId.value;

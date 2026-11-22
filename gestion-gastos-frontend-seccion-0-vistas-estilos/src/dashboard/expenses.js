@@ -10,6 +10,7 @@ const inputId = document.getElementById("expenseId");
 const btnSave = document.getElementById("saveExpense");
 const btnUpdate = document.getElementById("updateExpense");
 const btnCancel = document.getElementById("cancelUpdate");
+const btnDelete = document.getElementById("expenseDelete");
 const expenseList = document.getElementById("expenseList");
 
 //Funcion para cargar las categorias en el selector
@@ -64,10 +65,15 @@ async function loadExpenses() {
       li.innerHTML = `
         <span>${expense.title}--->$${expense.amount}</span>
         <button class="edit">Editar</button>
+        <button class="delete">Eliminar</button>
       `;
       li.querySelector("button").addEventListener("click", () => {
         editExpense(expense);
       });
+      li.querySelector(".delete").addEventListener("click", () => {
+        deleteExpense(expense._id);
+      });
+
       expenseList.appendChild(li);
     });
   } catch (error) {
@@ -119,6 +125,21 @@ async function updateExpense() {
     alert("No pudimos actualizar el Gasto");
   }
 }
+
+//Delete gasto
+
+async function deleteExpense(id) {
+  try {
+    if (!confirm("Eliminar este Gasto?")) return;
+    const token = getToken();
+    await apiFetch(`/expenses/${id}`, "DELETE", null, token);
+    loadExpenses();
+  } catch (error) {
+    console.error(error);
+    alert("No pudimos Borrar el Gasto");
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadCategories();
   loadExpenses();
